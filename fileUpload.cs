@@ -32,3 +32,10 @@
 
             return Ok(new { count = files.Count, size, filePath });
         }
+        [Route("get_image")]
+        [HttpGet]
+        public IActionResult Get()
+        {
+            Byte[] b = System.IO.File.ReadAllBytes(@"C:\\Users\\jibin.jh\\Downloads\\New folder\\Test1");   // You can use your own method over here.         
+            return File(b, "image/jpeg");
+        }
