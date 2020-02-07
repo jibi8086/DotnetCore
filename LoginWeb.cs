@@ -1,3 +1,21 @@
+public  IActionResult Index()
+        {
+            UserModel login = new UserModel();
+            login.EmailAddress="Test";
+            login.Username = "um";
+            var test = Login(login,10);
+            try
+            {
+                 var data1 = ProviderBase.PostAsync<long>($"api/login/SignUp", login, "");
+                login.Username = "um";
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return View();
+        }
 public async Task<ActionResult> Login(UserModel login, int? expireTime) {
 
             try
