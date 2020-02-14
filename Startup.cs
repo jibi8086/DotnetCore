@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IRepository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,9 +11,11 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Repository;
 using SampleEntity;
 using SampleInterface;
 
@@ -46,7 +49,10 @@ namespace API
                 });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSingleton < IConfiguration > (Configuration);
-            services.Add(new ServiceDescriptor(typeof(ITest), new Test()));
+            //services.Add(new ServiceDescriptor(typeof(ITest), new Test()));
+            //services.Add(new ServiceDescriptor(typeof(ILoginEntity), new LoginEntity()));
+            services.TryAdd(ServiceDescriptor.Scoped(typeof(ILoginEntity), typeof(LoginEntity)));
+            services.TryAdd(ServiceDescriptor.Scoped(typeof(ILoginRepo), typeof(LoginRepo)));
             services.AddCors();
         }
 
